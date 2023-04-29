@@ -26,18 +26,13 @@ export const apiSlice = createApi({
     tagTypes: [],
     // The "endpoints" represent operations and requests for this server
     endpoints: (builder) => ({
-        getBooks: builder.query({
+        getAnimations: builder.query({
             query: (data) => ({
-                url: `https://api.udaptstudio.ir/api/books?page=${data.page}&q=${encodeURI(data.search)}`,
-            }),
-        }),
-        getBook: builder.query({
-            query: (data) => ({
-                url: `https://api.udaptstudio.ir/api/books/${data.id}`,
+                url: `https://kodoumo.ir/wp-json/api/v2/reviews-category/animations?page=${data?.page}`,
             }),
         }),
     }),
 });
 
 // Export the auto-generated hook for the `getPosts` query endpoint
-export const { useGetBooksQuery, useGetBookQuery } = apiSlice;
+export const { useGetAnimationsQuery} = apiSlice;

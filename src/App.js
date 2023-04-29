@@ -6,16 +6,19 @@ import store from "./reducer/store";
 import theme from "./utils/theme";
 import Header from "./components/shared/header/Header";
 import Products from "./containers/products/products";
+import RTL from "./utils/rtl";
 
 function App() {
     return (
         <div className="App">
             <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <Header />
-                    <Products />
-                </ThemeProvider>
+                <RTL>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
+                        <Header />
+                        <Products />
+                    </ThemeProvider>
+                </RTL>
             </Provider>
         </div>
     );
