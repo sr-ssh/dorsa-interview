@@ -3,8 +3,11 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import * as React from "react";
+import CustomeDrawer from "./Drawer";
 
-const ProductsHeader = () => {
+const ProductsHeader = ({setSort}) => {
+    const [open, setOpen] = React.useState(false);
+
     return (
         <Grid2>
             <Paper
@@ -17,9 +20,9 @@ const ProductsHeader = () => {
                     p: 2,
                 }}
             >
-                <Grid2 container flexDirection="column" gap={2}>
+                <Grid2 container flexDirection="column" gap={1}>
                     <Typography variant="body1">چیارو ببینه؟</Typography>
-                    <Typography variant="caption" color='text.secondary'>
+                    <Typography variant="caption" color="text.secondary">
                         مناسب برای ۳ تا ۷ سال
                     </Typography>
                 </Grid2>
@@ -28,6 +31,7 @@ const ProductsHeader = () => {
                     flexDirection="row"
                     alignItems="center"
                     flexWrap="noWrap"
+                    onClick={() => setOpen(true)}
                 >
                     <IconButton
                         size="large"
@@ -37,9 +41,12 @@ const ProductsHeader = () => {
                     >
                         <img src="/images/sort.svg" alt="sort" />
                     </IconButton>
-                    <Typography variant="caption" color='text.secondary'>مرتب‌سازی</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                        مرتب‌سازی
+                    </Typography>
                 </Grid2>
             </Paper>
+            <CustomeDrawer open={open} setOpen={setOpen} setSort={setSort}/>
         </Grid2>
     );
 };

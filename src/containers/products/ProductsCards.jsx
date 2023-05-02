@@ -1,20 +1,27 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import * as React from "react";
 import { useGetAnimationsQuery } from "../../reducer/apiSlice";
-import { CircularProgress, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ProductsCard from "./ProductsCard";
 
-const ProductsCards = () => {
+const ProductsCards = ({ sort }) => {
     const [data, setData] = React.useState([]);
     const [page, setPage] = React.useState(1);
-    const loaderRef = React.useRef(null);
     const [scrollTop, setScrollTop] = React.useState(0);
+    const loaderRef = React.useRef(null);
 
-    const { data: currData, isSuccess } = useGetAnimationsQuery({ page });
+    React.useEffect(() => {
+        setPage(1);
+        setData([]);
+    }, [sort]);
 
-    const fetchData = () => {
+    const { data: currData, isSuccess } = useGetAnimationsQuery({ page, sort });
+
+    const fetchData = React.useCallback(() => {
         setPage((prevPage) => prevPage + 1);
-    };
+    }, []);
+
     const handleScroll = () => {
         setScrollTop(window.scrollY);
     };
@@ -54,28 +61,7 @@ const ProductsCards = () => {
                     }}
                 >
                     {data.map((item) => (
-                        <Grid2
-                            key={item.id}
-                            container
-                            flexDirection="column"
-                            sx={{ width: "190px", borderRadius: 4 }}
-                            gap={1}
-                        >
-                            <img
-                                src={item.reviewsThumbnailUrl}
-                                alt={item.reviewsTitle}
-                                width="190"
-                                height={280}
-                                style={{
-                                    borderRadius: "16px",
-                                }}
-                            />
-                            <Typography>{item.reviewsTitle}</Typography>
-                            <Grid2 container gap={1}>
-                                <img src="images/star.svg" alt="star" />
-                                <Typography>{item.reviewsRate}</Typography>
-                            </Grid2>
-                        </Grid2>
+                        <ProductsCard key={item.id} item={item} />
                     ))}
                 </Grid2>
             </InfiniteScroll>
